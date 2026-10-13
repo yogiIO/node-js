@@ -31,3 +31,11 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            echo "=== SSH Login Successful ==="
+            whoami
+            hostname -I
+            echo "=== Checking Docker Version ==="
+            docker --version
+            echo "=== Listing Running Containers ==="
+            sudo docker ps
