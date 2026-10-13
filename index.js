@@ -10,6 +10,10 @@ const app = http.createServer((req, res) => {
         res.write("This is the endpoint");
         res.end();
     }
+    else if(req.url="/new-test"){
+        res.write("This is new endpoint");
+        res.end();
+    }
 })
 
 
