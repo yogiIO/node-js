@@ -48,8 +48,8 @@ jobs:
             sudo docker build -t node-js-image .
             
             # 5. Run the container in the background (-d) and map the ports (-p)
-            # Change 8080:8080 to match your API's host port and internal port
-            sudo docker run -d -p 8080:8080 --name node_api_app node-js-image
+            # Change 3000:3000 to match your API's host port and internal port
+            sudo docker run -d -p 3000:3000 --name node_api_app node-js-image
             
             # 6. Verify it stayed alive
             echo "=== Checking Running Containers ==="
