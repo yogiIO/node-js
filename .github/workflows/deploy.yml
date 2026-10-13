@@ -32,10 +32,25 @@ jobs:
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            echo "=== SSH Login Successful ==="
-            whoami
-            hostname -I
-            echo "=== Checking Docker Version ==="
-            docker --version
-            echo "=== Listing Running Containers ==="
+            echo "=== Starting Application Deployment ==="
+            
+            # 1. Stop and remove the old container if it exists to avoid port conflicts
+            sudo docker stop my-api-container || true
+            sudo docker rm my-api-container || true
+            
+            # 2. Navigate to your project directory (adjust this path to where your code lives on EC2)
+            cd /home/ec2-user/your-project-folder
+            
+            # 3. Pull the latest changes from Git (if you pull code directly on the server)
+            git pull origin main
+            
+            # 4. Build the new Docker image
+            sudo docker build -t my-api-image .
+            
+            # 5. Run the container in the background (-d) and map the ports (-p)
+            # Change 8080:8080 to match your API's host port and internal port
+            sudo docker run -d -p 8080:8080 --name my-api-container my-api-image
+            
+            # 6. Verify it stayed alive
+            echo "=== Checking Running Containers ==="
             sudo docker ps
