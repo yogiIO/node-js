@@ -35,8 +35,8 @@ jobs:
             echo "=== Starting Application Deployment ==="
             
             # 1. Stop and remove the old container if it exists to avoid port conflicts
-            sudo docker stop node_api_app || true
-            sudo docker rm node_api_app || true
+            docker stop node_api_app || true
+            docker rm node_api_app || true
             
             # 2. Navigate to your project directory (adjust this path to where your code lives on EC2)
             cd /home/ec2-user/node-js
@@ -45,12 +45,12 @@ jobs:
             git pull origin main
             
             # 4. Build the new Docker image
-            sudo docker build -t node-js-image .
+            docker build -t node-js-image .
             
             # 5. Run the container in the background (-d) and map the ports (-p)
             # Change 3000:3000 to match your API's host port and internal port
-            sudo docker run -d -p 3000:3000 --name node_api_app node-js-image
+            docker run -d -p 3000:3000 --name node_api_app node-js-image
             
             # 6. Verify it stayed alive
             echo "=== Checking Running Containers ==="
-            sudo docker ps
+            docker ps
